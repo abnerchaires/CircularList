@@ -53,7 +53,7 @@ int main()
 		{
 			inFile >> item;
 			//cin >> item;
-			list.PutItem(item);
+			list.AddItem(item);
             cout << item;
             cout << " is in list." << endl;
 			outFile << item;

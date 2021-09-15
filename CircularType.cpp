@@ -36,9 +36,33 @@ bool CircularType<T>::IsFull() const
 }
 
 template<class T>
-void CircularType<T>::AddItem(T newItem)
+void CircularType<T>::AddItem(T newItem) //finds the location to insert the item.
 {
+    if (IsEmpty())
+    {
+        Node* newNode = newNode;
+        newNode->next = newNode;
+        newNode->info = newItem;
+        tail = newNode;
+        length++;
+        return;
+    }
 
+    Node* predLoc = tail; // starts at "tail"
+    Node* curr = tail->next; // starts at "head".
+    while (curr != tail)
+    {
+        if (newItem < curr->info)
+        {
+            InsertNode(curr, predLoc, newItem);
+            // no bookkeeping needed here because it's already done in the helper InsertNode function.
+            return;
+        }
+        predLoc = curr;
+        curr = curr->next;
+    }
+    InsertNode(tail, tail->next , newItem)
+    tail = tail->next;
 }
 
 
@@ -54,8 +78,19 @@ T CircularType<T>::GetNextItem()
 }
 
 template<class T>
-void CircularType<T>::InsertNode(Node*& curr, Node*& prev, T newItem)
+void CircularType<T>::InsertNode(Node*& curr, Node*& predLoc, T newItem)
 {
+
+    if (IsFull())
+    {
+        throw FullList();
+    }
+
+    Node* newNode = new Node;
+    newNode->next = curr;
+    newNode->info = newItem;
+    predLoc->next = newNode;
+    ++length;
 
 }
 
